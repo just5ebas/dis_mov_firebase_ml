@@ -6,30 +6,24 @@ import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.widget.Toast
-import com.google.firebase.FirebaseException
 import com.google.mlkit.nl.languageid.LanguageIdentification
 
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
-import com.google.mlkit.vision.text.chinese.ChineseTextRecognizerOptions
-import com.google.mlkit.vision.text.japanese.JapaneseTextRecognizerOptions
 
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.grupal.proyectofinal.databinding.ActivityMainBinding
 
-import java.util.Arrays
 import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var textRecognizerEnglish: TextRecognizer
-    private lateinit var textRecognizerChinese: TextRecognizer
+    private lateinit var textRecognizer: TextRecognizer
 
-    private val recognizerEnglish = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+    private val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
 
     private var ultimoIdioma : String = "und"
 
@@ -39,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        textRecognizerEnglish = recognizerEnglish
+        textRecognizer = recognizer
 
         binding.captureButton.setOnClickListener {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -77,7 +71,7 @@ class MainActivity : AppCompatActivity() {
     private fun recognizeText(bitmap: Bitmap) {
         val image = InputImage.fromBitmap(bitmap, 0)
 
-        textRecognizerEnglish.process(image)
+        textRecognizer.process(image)
             .addOnSuccessListener { visionText ->
 
                 val recognizedText = processTextRecognitionResult(visionText)
