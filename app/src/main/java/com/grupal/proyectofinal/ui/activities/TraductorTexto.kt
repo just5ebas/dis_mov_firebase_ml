@@ -92,7 +92,7 @@ class TraductorTexto : AppCompatActivity() {
     }
 
     private fun traducirTexto() {
-        progressDialog.setMessage("Procesasndo")
+        progressDialog.setMessage("Procesando")
         progressDialog.show()
         translatorOption = TranslatorOptions.Builder().setSourceLanguage(codigoIdiomaOrigen)
             .setTargetLanguage(codigoIdiomaDestino).build()
@@ -108,6 +108,7 @@ class TraductorTexto : AppCompatActivity() {
             translator.translate(textoIdiomaOrigen).addOnSuccessListener {
                 Log.d("DISMISS", "Se ha logrado con exito  $it")
                 binding.IdiomaDestino.text = it
+                progressDialog.hide()
             }
                 .addOnFailureListener {
                     progressDialog.dismiss()
@@ -142,9 +143,6 @@ class TraductorTexto : AppCompatActivity() {
 
         for (codLenguje in listaCodigoIdioma) {
             var tituloLenguaje: String = Locale(codLenguje).displayLanguage
-
-            //  Log.d("UCE", "idioma registro $codLenguje")
-            //  Log.d("UCE", "idioma registro $tituloLenguaje")
 
             var modeloIdioma = Idioma(codLenguje, tituloLenguaje)
             idiomas.add(modeloIdioma)
@@ -191,10 +189,8 @@ class TraductorTexto : AppCompatActivity() {
 
             binding.IdiomaElegido.text = tituloIdiomaDestino
 
-
             Log.d("UCE2", "idioma registro $codigoIdiomaDestino")
             Log.d("UCE2", "idioma registro $tituloIdiomaDestino")
-
 
             false
         }
