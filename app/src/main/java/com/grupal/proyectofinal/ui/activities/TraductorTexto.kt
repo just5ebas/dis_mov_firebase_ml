@@ -44,6 +44,7 @@ class TraductorTexto : AppCompatActivity() {
         setContentView(binding.root)
 
         idiomasDisponibles()
+        iniciar()
 
         binding.elegirIdioma.setOnClickListener {
             Toast.makeText(
@@ -106,7 +107,7 @@ class TraductorTexto : AppCompatActivity() {
             progressDialog.setMessage("Traduciendo Texto")
             translator.translate(textoIdiomaOrigen).addOnSuccessListener {
                 Log.d("DISMISS", "Se ha logrado con exito  $it")
-                //binding.IdiomaDestino.setText()
+                binding.IdiomaDestino.text = it
             }
                 .addOnFailureListener {
                     progressDialog.dismiss()
