@@ -108,6 +108,7 @@ class TraductorTexto : AppCompatActivity() {
             translator.translate(textoIdiomaOrigen).addOnSuccessListener {
                 Log.d("DISMISS", "Se ha logrado con exito  $it")
                 binding.IdiomaDestino.text = it
+                progressDialog.dismiss()
             }
                 .addOnFailureListener {
                     progressDialog.dismiss()

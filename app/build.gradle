@@ -88,5 +88,6 @@ dependencies {
 
     // Reconocimiento de idioma de texto (codigo del lenguaje)
     implementation 'com.google.mlkit:language-id:17.0.4'
-
+    //Lottie animations
+    implementation 'com.airbnb.android:lottie:4.2.1'
 }

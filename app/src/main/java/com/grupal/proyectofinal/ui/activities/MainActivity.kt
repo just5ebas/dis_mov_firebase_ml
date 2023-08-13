@@ -25,22 +25,20 @@ class MainActivity : AppCompatActivity() {
 
     private val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
 
-    private var ultimoIdioma : String = "und"
+    private var ultimoIdioma: String = "und"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         textRecognizer = recognizer
 
         binding.captureButton.setOnClickListener {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             startActivityForResult(intent, 1)
         }
-
-        binding.verIdioma.setOnClickListener{
+        binding.verIdioma.setOnClickListener {
             if (ultimoIdioma == "und") {
                 Toast.makeText(
                     baseContext,
@@ -57,7 +55,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
+        binding.traductor.setOnClickListener {
+            startActivity(Intent(this, TraductorTexto::class.java))
+        }
+        binding.detector.setOnClickListener {
+            startActivity(Intent(this, IdiomaTexto::class.java))
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -107,7 +110,6 @@ class MainActivity : AppCompatActivity() {
                         ).show()
                     }
 
-
 //                binding.textView.text = recognizedText
 //                Toast.makeText(
 //                    baseContext,
@@ -132,8 +134,6 @@ class MainActivity : AppCompatActivity() {
 //                    ).show()
 //                }
             }
-
-
 
 
     }

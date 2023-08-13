@@ -1,88 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".ui.activities.TraductorTexto">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="633dp"
-        android:layout_above="@+id/botones_linear"
-        android:layout_marginBottom="5dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/idiomaOrigen"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="start"
-                android:hint="Ingrese Texto"
-                android:minHeight="100dp"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/IdiomaDestino"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Traduccion"
-                android:textSize="18sp"
-                android:textStyle="bold|italic" />
-        </LinearLayout>
-    </ScrollView>
-
-    <LinearLayout
-        android:id="@+id/botones_linear"
+    <EditText
+        android:id="@+id/idiomaOrigen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_above="@+id/btnTraducir">
+        android:background="@drawable/border"
+        android:gravity="top"
+        android:hint=" Ingrese Texto"
+        android:minHeight="100dp"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/elegirIdioma"
+            style="@style/Animation.Design.BottomSheetDialog"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Español"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cornerRadius="10dp"
-            android:layout_weight="1"/>
-        
+            android:textColor="@color/white"
+            app:cornerRadius="8dp" />
+
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_cambiar"
-            android:background="@android:color/transparent"
-            android:padding="10dp"/>
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_cambiar" />
 
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/IdiomaElegido"
-            android:text="Ingles"
-            android:layout_width="wrap_content"
+            style="@style/Animation.Design.BottomSheetDialog"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:cornerRadius="10dp"
             android:layout_weight="1"
-              />
-
-
+            android:text="Inglés"
+            android:textColor="@color/white"
+            app:cornerRadius="8dp" />
 
     </LinearLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnTraducir"
-        android:text="Traducir"
+    <TextView
+        android:id="@+id/IdiomaDestino"
+        style="@style/Animation.Design.BottomSheetDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:cornerRadius="10dp"
-        app:icon="@drawable/ic_translate"/>
+        android:layout_marginTop="16dp"
+        android:background="@drawable/border"
+        android:gravity="top"
+        android:minHeight="100dp"
+        android:hint=" Traducción"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
+        />
 
+    <Button
+        android:id="@+id/btnTraducir"
+        style="@style/Animation.Design.BottomSheetDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Traducir"
+        android:textAllCaps="false"
+        app:cornerRadius="8dp"
+        app:icon="@drawable/ic_translate" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:lottie_imageAssetsFolder="assets"
+        android:layout_marginTop="30dp"
+        app:lottie_loop="true"
+        app:lottie_fileName="trans_anim.json"
+        app:lottie_autoPlay="true"
+        />
 
-</RelativeLayout>
+</LinearLayout>
