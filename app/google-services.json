@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "834642831885",
+    "project_id": "trabajo-grupal-dm",
+    "storage_bucket": "trabajo-grupal-dm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:834642831885:android:de176702ca8c09ee688344",
+        "android_client_info": {
+          "package_name": "com.grupal.proyectofinal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "834642831885-9smblspp0dm7t6r6ubr7q6hvt62nm1si.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjZR7ohsBkO2MdwHI_vTd7Xm1okEaJuTo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "834642831885-9smblspp0dm7t6r6ubr7q6hvt62nm1si.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
