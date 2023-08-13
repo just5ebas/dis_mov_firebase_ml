@@ -19,7 +19,7 @@
         android:theme="@style/Theme.ProyectoFinal"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activities.MainActivity"
+            android:name=".ui.activities.IdiomaTexto"
             android:exported="false" />
 
         <meta-data
@@ -30,7 +30,7 @@
             android:name=".ui.activities.TraductorTexto"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.IdiomaTexto"
+            android:name=".ui.activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

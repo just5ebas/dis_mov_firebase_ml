@@ -6,8 +6,10 @@ import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Toast
 import com.google.firebase.FirebaseException
+import com.google.mlkit.nl.languageid.LanguageIdentification
 
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
@@ -19,6 +21,7 @@ import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.grupal.proyectofinal.databinding.ActivityMainBinding
 
 import java.util.Arrays
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -57,30 +60,63 @@ class MainActivity : AppCompatActivity() {
 
         textRecognizerEnglish.process(image)
             .addOnSuccessListener { visionText ->
+
                 val recognizedText = processTextRecognitionResult(visionText)
-                binding.textView.text = recognizedText
-                Toast.makeText(
-                    baseContext,
-                    "Idioma Ingles.",
-                    Toast.LENGTH_SHORT,
-                ).show()
 
-            }
-            .addOnFailureListener { e ->
-                if(e is FirebaseException){
-                    Toast.makeText(
-                        baseContext,
-                        "Ha ocurrido un error.",
-                        Toast.LENGTH_SHORT,
-                    ).show()
-                }else {
+                Log.d("UCE", recognizedText)
 
-                    Toast.makeText(
-                        baseContext,
-                        "Idioma Desconocido.",
-                        Toast.LENGTH_SHORT,
-                    ).show()
-                }
+                val languageIdentifier = LanguageIdentification.getClient()
+
+                // Identifica un solo idioma
+                languageIdentifier.identifyLanguage(recognizedText)
+                    .addOnSuccessListener { languageCode ->
+                        if (languageCode == "und") {
+                            Toast.makeText(
+                                baseContext,
+                                "No se puede identificar el idioma",
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                        } else {
+                            val nombreLenguaje = getLanguageName(languageCode)
+                            Toast.makeText(
+                                baseContext,
+                                "Idioma $nombreLenguaje",
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                        }
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(
+                            baseContext,
+                            "No se puede identificar el idioma",
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                    }
+
+
+//                binding.textView.text = recognizedText
+//                Toast.makeText(
+//                    baseContext,
+//                    "Idioma Ingles.",
+//                    Toast.LENGTH_SHORT,
+//                ).show()
+//
+//            }
+//            .addOnFailureListener { e ->
+//                if(e is FirebaseException){
+//                    Toast.makeText(
+//                        baseContext,
+//                        "Ha ocurrido un error.",
+//                        Toast.LENGTH_SHORT,
+//                    ).show()
+//                }else {
+//
+//                    Toast.makeText(
+//                        baseContext,
+//                        "Idioma Desconocido.",
+//                        Toast.LENGTH_SHORT,
+//                    ).show()
+//                }
             }
 
 
@@ -105,6 +141,11 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val REQUEST_IMAGE_CAPTURE = 1
+    }
+
+    private fun getLanguageName(languageCode: String): String {
+        val locale = Locale(languageCode)
+        return locale.displayLanguage
     }
 }
 
