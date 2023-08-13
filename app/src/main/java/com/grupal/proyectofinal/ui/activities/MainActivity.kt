@@ -31,6 +31,8 @@ class MainActivity : AppCompatActivity() {
 
     private val recognizerEnglish = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
 
+    private var ultimoIdioma : String = "und"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +44,23 @@ class MainActivity : AppCompatActivity() {
         binding.captureButton.setOnClickListener {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             startActivityForResult(intent, 1)
+        }
+
+        binding.verIdioma.setOnClickListener{
+            if (ultimoIdioma == "und") {
+                Toast.makeText(
+                    baseContext,
+                    "No se puede identificar el idioma",
+                    Toast.LENGTH_SHORT,
+                ).show()
+            } else {
+                val nombreLenguaje = getLanguageName(ultimoIdioma)
+                Toast.makeText(
+                    baseContext,
+                    "Idioma $nombreLenguaje",
+                    Toast.LENGTH_SHORT,
+                ).show()
+            }
         }
 
 
@@ -63,13 +82,14 @@ class MainActivity : AppCompatActivity() {
 
                 val recognizedText = processTextRecognitionResult(visionText)
 
-                Log.d("UCE", recognizedText)
+                binding.textView.text = recognizedText
 
                 val languageIdentifier = LanguageIdentification.getClient()
 
                 // Identifica un solo idioma
                 languageIdentifier.identifyLanguage(recognizedText)
                     .addOnSuccessListener { languageCode ->
+                        ultimoIdioma = languageCode
                         if (languageCode == "und") {
                             Toast.makeText(
                                 baseContext,
