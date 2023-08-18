@@ -3,10 +3,12 @@ package com.grupal.proyectofinal.ml.ui.activities
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.google.mlkit.nl.languageid.LanguageIdentification
 import com.google.mlkit.nl.languageid.LanguageIdentifier
 import com.google.mlkit.vision.common.InputImage
@@ -25,10 +27,40 @@ class MainActivity : AppCompatActivity() {
 
     private var ultimoIdioma: String = "und"
 
+    private lateinit var firebaseImage : String
+    private lateinit var firebaseImage2 : String
+    private lateinit var firebaseImage3 : String
+    private lateinit var firebaseImage4 : String
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //g1
+        firebaseImage = binding.imagenF1.toString()
+        var url1 = "https://media4.giphy.com/media/NS1agLkVGWjuYjhoQC/source.gif"
+        var urlparse1 : Uri = Uri.parse(url1)
+        Glide.with(this).load(urlparse1).into(binding.imagenF1)
+
+        //g2
+        firebaseImage2 = binding.imagenF2.toString()
+        var url2 = "https://raw.githubusercontent.com/StewartGF/StewartGF/master/images/firebase.gif"
+        var urlparse2 : Uri = Uri.parse(url2)
+        Glide.with(this).load(urlparse2).into(binding.imagenF2)
+
+        //g3
+        firebaseImage3 = binding.imagenF3.toString()
+        var url3 = "https://firebase.google.com/static/images/community/stories/campfire.gif"
+        var urlparse3 : Uri = Uri.parse(url3)
+        Glide.with(this).load(urlparse3).into(binding.imagenF3)
+
+        //g4
+        firebaseImage4 = binding.imagenF4.toString()
+        var url4 = "https://pa1.aminoapps.com/7672/839525d1cd346f59c481c2fdc94638599357bedcr1-223-240_hq.gif"
+        var urlparse4 : Uri = Uri.parse(url4)
+        Glide.with(this).load(urlparse4).into(binding.imagenF4)
 
         textRecognizer = recognizer
 
