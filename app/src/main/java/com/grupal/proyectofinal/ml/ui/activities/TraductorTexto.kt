@@ -1,9 +1,8 @@
-package com.grupal.proyectofinal.ui.activities
+package com.grupal.proyectofinal.ml.ui.activities
 
 import android.app.ProgressDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.widget.PopupMenu
 import android.widget.Toast
@@ -14,7 +13,7 @@ import com.google.mlkit.nl.translate.Translator
 import com.google.mlkit.nl.translate.TranslatorOptions
 
 import com.grupal.proyectofinal.databinding.ActivityTraductorTextoBinding
-import com.grupal.proyectofinal.ui.modelo.Idioma
+import com.grupal.proyectofinal.ml.data.Idioma
 import java.util.Locale
 
 class TraductorTexto : AppCompatActivity() {
@@ -24,11 +23,8 @@ class TraductorTexto : AppCompatActivity() {
     private lateinit var idiomas: ArrayList<Idioma>
 
     private var codigoIdiomaOrigen: String = "es"
-
     private var tituloIdiomaOrigen: String = "Español"
-
     private var codigoIdiomaDestino: String = "en"
-
     private var tituloIdiomaDestino: String = "Inglés"
 
     private lateinit var progressDialog: ProgressDialog
@@ -36,7 +32,6 @@ class TraductorTexto : AppCompatActivity() {
     private lateinit var translatorOption: TranslatorOptions
     private lateinit var translator: Translator
     private var textoIdiomaOrigen: String = ""
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,21 +42,21 @@ class TraductorTexto : AppCompatActivity() {
         iniciar()
 
         binding.elegirIdioma.setOnClickListener {
-            Toast.makeText(
-                baseContext,
-                "Elegir idioma",
-                Toast.LENGTH_SHORT,
-            ).show()
+//            Toast.makeText(
+//                baseContext,
+//                "Elegir idioma",
+//                Toast.LENGTH_SHORT,
+//            ).show()
 
             elegirIdiomaOrigen()
         }
 
         binding.IdiomaElegido.setOnClickListener {
-            Toast.makeText(
-                baseContext,
-                "idioma elegido",
-                Toast.LENGTH_SHORT,
-            ).show()
+//            Toast.makeText(
+//                baseContext,
+//                "Idioma elegido",
+//                Toast.LENGTH_SHORT,
+//            ).show()
 
             elegirIdiomaDestino()
         }
@@ -69,30 +64,24 @@ class TraductorTexto : AppCompatActivity() {
         binding.btnTraducir.setOnClickListener {
             ValidarDatos();
         }
-
-
     }
 
     private fun ValidarDatos() {
         textoIdiomaOrigen = binding.idiomaOrigen.text.toString().trim()
-        Log.d("UCE3", "---$textoIdiomaOrigen")
 
         if (textoIdiomaOrigen.isEmpty()) {
             Toast.makeText(
                 baseContext,
-                "Ingrese Texto",
+                "Ingrese texto",
                 Toast.LENGTH_SHORT,
             ).show()
-
         } else {
             traducirTexto()
         }
-
-
     }
 
     private fun traducirTexto() {
-        progressDialog.setMessage("Procesasndo")
+        progressDialog.setMessage("Procesando")
         progressDialog.show()
         translatorOption = TranslatorOptions.Builder().setSourceLanguage(codigoIdiomaOrigen)
             .setTargetLanguage(codigoIdiomaDestino).build()
@@ -102,33 +91,31 @@ class TraductorTexto : AppCompatActivity() {
         var downloadConditions: DownloadConditions =
             DownloadConditions.Builder().requireWifi().build()
 
-        translator.downloadModelIfNeeded(downloadConditions).addOnSuccessListener {
-            Log.d("DISMISS", "paquete descargado con exito")
-            progressDialog.setMessage("Traduciendo Texto")
-            translator.translate(textoIdiomaOrigen).addOnSuccessListener {
-                Log.d("DISMISS", "Se ha logrado con exito  $it")
-                binding.IdiomaDestino.text = it
-                progressDialog.dismiss()
+        translator.downloadModelIfNeeded(downloadConditions)
+            .addOnSuccessListener {
+                progressDialog.setMessage("Traduciendo Texto de $tituloIdiomaOrigen a $tituloIdiomaDestino")
+                translator.translate(textoIdiomaOrigen)
+                    .addOnSuccessListener {
+                        binding.IdiomaDestino.text = it
+                        progressDialog.dismiss()
+                    }
+                    .addOnFailureListener {
+                        progressDialog.dismiss()
+                        Toast.makeText(
+                            baseContext,
+                            "Parece que ha habido un error",
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                    }
             }
-                .addOnFailureListener {
-                    progressDialog.dismiss()
-                    Log.d("DISMISS", "onFailure $it")
-                    Toast.makeText(
-                        baseContext,
-                        "Oh no!!",
-                        Toast.LENGTH_SHORT,
-                    ).show()
-                }
-
-        }.addOnFailureListener {
-            progressDialog.dismiss()
-            Log.d("DISMISS", "onFailure $it")
-            Toast.makeText(
-                baseContext,
-                "Oh no!!",
-                Toast.LENGTH_SHORT,
-            ).show()
-        }
+            .addOnFailureListener {
+                progressDialog.dismiss()
+                Toast.makeText(
+                    baseContext,
+                    "Parece que ha habido un error",
+                    Toast.LENGTH_SHORT,
+                ).show()
+            }
     }
 
     private fun iniciar() {
@@ -141,13 +128,10 @@ class TraductorTexto : AppCompatActivity() {
         idiomas = ArrayList()
         var listaCodigoIdioma: List<String> = TranslateLanguage.getAllLanguages()
 
-        for (codLenguje in listaCodigoIdioma) {
-            var tituloLenguaje: String = Locale(codLenguje).displayLanguage
+        for (codLenguaje in listaCodigoIdioma) {
+            var tituloLenguaje: String = Locale(codLenguaje).displayLanguage
 
-            //  Log.d("UCE", "idioma registro $codLenguje")
-            //  Log.d("UCE", "idioma registro $tituloLenguaje")
-
-            var modeloIdioma = Idioma(codLenguje, tituloLenguaje)
+            var modeloIdioma = Idioma(codLenguaje, tituloLenguaje)
             idiomas.add(modeloIdioma)
         }
     }
@@ -167,11 +151,6 @@ class TraductorTexto : AppCompatActivity() {
 
             binding.elegirIdioma.text = tituloIdiomaOrigen
             binding.idiomaOrigen.hint = "Ingrese texto en: $tituloIdiomaOrigen"
-
-            Log.d("UCE", "idioma registro $codigoIdiomaOrigen")
-            Log.d("UCE", "idioma registro $tituloIdiomaOrigen")
-
-
             false
         }
 
@@ -192,14 +171,8 @@ class TraductorTexto : AppCompatActivity() {
 
             binding.IdiomaElegido.text = tituloIdiomaDestino
 
-
-            Log.d("UCE2", "idioma registro $codigoIdiomaDestino")
-            Log.d("UCE2", "idioma registro $tituloIdiomaDestino")
-
-
             false
         }
-
     }
 }
 

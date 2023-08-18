@@ -6,16 +6,26 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".ui.activities.TraductorTexto">
+    tools:context=".ml.ui.activities.TraductorTexto">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Traductor"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/idiomaOrigen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:background="@drawable/border"
         android:gravity="top"
         android:hint=" Ingrese Texto"
         android:minHeight="100dp"
+        android:padding="10dp"
         android:textSize="18sp" />
 
     <LinearLayout
@@ -34,7 +44,7 @@
             android:textColor="@color/white"
             app:cornerRadius="8dp" />
 
-        <ImageButton
+        <ImageView
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/ic_cambiar" />
@@ -60,11 +70,11 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/border"
         android:gravity="top"
-        android:minHeight="100dp"
         android:hint=" Traducción"
+        android:minHeight="100dp"
+        android:padding="10dp"
         android:textSize="18sp"
-        android:textStyle="bold|italic"
-        />
+        android:textStyle="italic" />
 
     <Button
         android:id="@+id/btnTraducir"
@@ -80,11 +90,10 @@
     <com.airbnb.lottie.LottieAnimationView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:lottie_imageAssetsFolder="assets"
         android:layout_marginTop="30dp"
-        app:lottie_loop="true"
-        app:lottie_fileName="trans_anim.json"
         app:lottie_autoPlay="true"
-        />
+        app:lottie_fileName="trans_anim.json"
+        app:lottie_imageAssetsFolder="assets"
+        app:lottie_loop="true" />
 
 </LinearLayout>

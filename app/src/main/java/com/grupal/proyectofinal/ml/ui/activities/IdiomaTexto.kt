@@ -1,14 +1,12 @@
-package com.grupal.proyectofinal.ui.activities
+package com.grupal.proyectofinal.ml.ui.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.mlkit.nl.languageid.LanguageIdentification
-import com.grupal.proyectofinal.R
+import com.google.mlkit.nl.languageid.LanguageIdentifier
 import com.grupal.proyectofinal.databinding.ActivityIdiomaTextoBinding
-import com.grupal.proyectofinal.databinding.ActivityMainBinding
-import java.util.Locale
+import com.grupal.proyectofinal.ml.logic.IdentificadorLenguaje
 
 class IdiomaTexto : AppCompatActivity() {
 
@@ -30,20 +28,7 @@ class IdiomaTexto : AppCompatActivity() {
             // Identifica un solo idioma
             languageIdentifier.identifyLanguage(binding.txtTraduccion.text.toString())
                 .addOnSuccessListener { languageCode ->
-                    if (languageCode == "und") {
-                        Toast.makeText(
-                            baseContext,
-                            "No se puede identificar el idioma",
-                            Toast.LENGTH_SHORT,
-                        ).show()
-                    } else {
-                        val nombreLenguaje = getLanguageName(languageCode)
-                        Toast.makeText(
-                            baseContext,
-                            "Idioma $nombreLenguaje",
-                            Toast.LENGTH_SHORT,
-                        ).show()
-                    }
+                    gestionSnackbars(languageCode)
                 }
                 .addOnFailureListener {
                     Toast.makeText(
@@ -67,14 +52,23 @@ class IdiomaTexto : AppCompatActivity() {
 //                    // ...
 //                }
         }
-
-
     }
 
-    private fun getLanguageName(languageCode: String): String {
-        val locale = Locale(languageCode)
-        return locale.displayLanguage
+    private fun gestionSnackbars(codigoLenguaje: String) {
+        if (codigoLenguaje == "und") {
+            Toast.makeText(
+                baseContext,
+                "No se puede identificar el idioma",
+                Toast.LENGTH_SHORT,
+            ).show()
+        } else {
+            val nombreLenguaje = IdentificadorLenguaje().obtenerNombreLenguaje(codigoLenguaje)
+            Toast.makeText(
+                baseContext,
+                "Idioma $nombreLenguaje",
+                Toast.LENGTH_SHORT,
+            ).show()
+        }
     }
-
 
 }
