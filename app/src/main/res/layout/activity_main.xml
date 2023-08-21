@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
         android:drawableLeft="@drawable/baseline_photo_camera_24"
-        android:text="Capture Image"
+        android:text="Capturar imagen"
         android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
