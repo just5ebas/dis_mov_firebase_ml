@@ -13,7 +13,6 @@ import com.google.mlkit.nl.languageid.LanguageIdentification
 import com.google.mlkit.nl.languageid.LanguageIdentifier
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
-import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.grupal.proyectofinal.databinding.ActivityMainBinding
 import com.grupal.proyectofinal.ml.logic.IdentificadorLenguaje
@@ -22,8 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var textRecognizer: TextRecognizer
-    private val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+    private var textRecognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
 
     private var ultimoIdioma: String = "und"
 
@@ -61,8 +59,6 @@ class MainActivity : AppCompatActivity() {
         var url4 = "https://pa1.aminoapps.com/7672/839525d1cd346f59c481c2fdc94638599357bedcr1-223-240_hq.gif"
         var urlparse4 : Uri = Uri.parse(url4)
         Glide.with(this).load(urlparse4).into(binding.imagenF4)
-
-        textRecognizer = recognizer
 
         binding.captureButton.setOnClickListener {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
